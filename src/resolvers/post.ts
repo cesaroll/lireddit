@@ -8,7 +8,9 @@ export class PostResolver {
   posts(
     @Ctx() {em}: MyContext
   ): Promise<Post[]> {
-    return em.find(Post, {});
+    return em.find(Post, {}, {orderBy: [
+      {id: 1}
+    ]})
   }
 
   @Query(() => Post, { nullable: true})
