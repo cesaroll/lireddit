@@ -12,5 +12,6 @@ export default {
   entitiesTs: ['./src/entities'],
   dbName: 'lireddit',
   type: 'postgresql',
-  debug: !__prod__
+  debug: !__prod__,
+  allowGlobalContext: true,
 } as Parameters<typeof MikroORM.init>[0];

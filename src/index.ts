@@ -8,12 +8,11 @@ const main = async () => {
   console.log('__dirname:', __dirname);
 
   const orm = await MikroORM.init(mikroConfig);
+  await orm.getMigrator().up();
 
   console.log('Creating Posts');
   const post = orm.em.create(Post, {title: 'my first post'} as Post);
   await orm.em.persistAndFlush(post);
-  console.log('--------------------sql2----------------');
-  await orm.em.nativeInsert(Post, {title: 'my first post'});
 
 }
 
