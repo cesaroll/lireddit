@@ -14,9 +14,9 @@ const main = async () => {
   // const post = orm.em.create(Post, {title: 'my first post'} as Post);
   // await orm.em.persistAndFlush(post);
 
-  console.log('Displaying Posts');
-  const posts = await orm.em.find(Post, {});
-  console.log(posts);
+  // console.log('Displaying Posts');
+  // const posts = await orm.em.find(Post, {});
+  // console.log(posts);
 
 }
 
