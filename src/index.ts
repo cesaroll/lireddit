@@ -1,7 +1,7 @@
 import { MikroORM } from "@mikro-orm/core";
 import { __prod__ } from "./constants";
-import { Post } from "./entities/Post";
 import mikroConfig from "./mikro-orm.config";
+import express from 'express';
 
 const main = async () => {
   console.log('Running main');
@@ -10,14 +10,13 @@ const main = async () => {
   const orm = await MikroORM.init(mikroConfig);
   await orm.getMigrator().up();
 
-  // console.log('Creating Posts');
-  // const post = orm.em.create(Post, {title: 'my first post'} as Post);
-  // await orm.em.persistAndFlush(post);
-
-  // console.log('Displaying Posts');
-  // const posts = await orm.em.find(Post, {});
-  // console.log(posts);
-
+  const app = express();
+  app.get('/', (_, res) => {
+    res.send('Hello World!')
+;  });
+  app.listen(4000, () => {
+    console.log('Server started on localhost:4000');
+  });
 }
 
 main().catch(e => {
