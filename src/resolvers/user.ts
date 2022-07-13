@@ -3,6 +3,13 @@ import { Resolver, Ctx, Mutation, Arg, InputType, Field, ObjectType, Query } fro
 import argon2 from 'argon2';
 import { User } from '../entities/User';
 
+import "express-session";
+declare module "express-session" {
+  interface SessionData {
+    userId: number;
+  }
+}
+
 @InputType()
 class UsernamePasswordInput {
   @Field()
@@ -90,7 +97,7 @@ export class UserResolver {
     @Arg('options')
     options: UsernamePasswordInput,
     @Ctx()
-    {em}: MyContext
+    {em, req}: MyContext
   ): Promise<UserResponse> {
     const user = await em.findOne(User, { userName: options.username});
 
@@ -115,6 +122,8 @@ export class UserResolver {
         ]
       };
     }
+
+    req.session.userId = user.id;
 
     return { user };
   }
