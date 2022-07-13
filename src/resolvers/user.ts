@@ -58,7 +58,7 @@ export class UserResolver {
     @Arg('options')
     options: UsernamePasswordInput,
     @Ctx()
-    {em}: MyContext
+    { em, req }: MyContext
   ): Promise<UserResponse> {
     if (options.username.length < 5) {
       return {
@@ -102,6 +102,9 @@ export class UserResolver {
         }
       }
     }
+
+    // Store userId session, to set cookie to user and keep them logged in.
+    req.session.userId = user.id;
 
     return {user};
   }
