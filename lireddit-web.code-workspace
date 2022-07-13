@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "lireddit-web"
+		},
+		{
+			"path": "lireddit-server"
+		}
+	],
+	"settings": {}
+}
