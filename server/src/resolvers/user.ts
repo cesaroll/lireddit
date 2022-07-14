@@ -96,7 +96,7 @@ export class UserResolver {
           errors: [
             {
               field: "username",
-              message: "Already exists"
+              message: "username  already exists"
             }
           ]
         }
