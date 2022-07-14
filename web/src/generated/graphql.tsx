@@ -104,6 +104,18 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, userName: string } | null, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
 
+export type LoginQueryVariables = Exact<{
+  options: UsernamePasswordInput;
+}>;
+
+
+export type LoginQuery = { __typename?: 'Query', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, userName: string } | null, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, userName: string } | null };
+
 
 export const RegisterDocument = gql`
     mutation Register($username: String!, $password: String!) {
@@ -122,4 +134,34 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const LoginDocument = gql`
+    query Login($options: UsernamePasswordInput!) {
+  login(options: $options) {
+    user {
+      id
+      userName
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useLoginQuery(options: Omit<Urql.UseQueryArgs<LoginQueryVariables>, 'query'>) {
+  return Urql.useQuery<LoginQuery>({ query: LoginDocument, ...options });
+};
+export const MeDocument = gql`
+    query Me {
+  me {
+    id
+    userName
+  }
+}
+    `;
+
+export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 };

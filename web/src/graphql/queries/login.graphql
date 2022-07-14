@@ -1,0 +1,12 @@
+query Login($options: UsernamePasswordInput!) {
+  login(options: $options) {
+    user {
+      id,
+      userName
+    }
+    errors {
+      field,
+      message
+    }
+  }
+}
