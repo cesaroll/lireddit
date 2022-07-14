@@ -5,16 +5,36 @@ import Wrapper from "../components/Wrapper";
 import InputField from "../components/InputField";
 import { useMutation } from "urql";
 
+const REGISTER_MUT = `
+mutation Register($username: String!, $password: String!) {
+  register(options: {
+      username: $username,
+      password: $password
+  }) {
+      user {
+          id,
+          userName
+      },
+      errors {
+          field,
+          message
+      }
+  }
+}
+`;
+
 interface RegisterProps {}
 
 export const Register: React.FC<RegisterProps> = ({}) => {
-// const [] = useMutation();
+const [,register] = useMutation(REGISTER_MUT);
 
   return (
     <Wrapper variant="small">
       <Formik
         initialValues={{ username: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => {
+          return register(values);
+        }}
       >
         {({ isSubmitting }) => (
           <Form>
