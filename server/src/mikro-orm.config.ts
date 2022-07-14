@@ -12,6 +12,7 @@ export default {
   entitiesTs: ['./src/entities'],
   dbName: 'lireddit',
   type: 'postgresql',
+  password: "docker", // Comment as needed
   debug: !__prod__,
   allowGlobalContext: true,
 } as Parameters<typeof MikroORM.init>[0];
