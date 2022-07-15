@@ -109,7 +109,7 @@ export class UserResolver {
     return {user};
   }
 
-  @Query(() => UserResponse)
+  @Mutation(() => UserResponse)
   async login(
     @Arg('options')
     options: UsernamePasswordInput,

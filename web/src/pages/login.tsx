@@ -3,12 +3,12 @@ import { Form, Formik } from "formik";
 import { Box, Button } from "@chakra-ui/react";
 import Wrapper from "../components/Wrapper";
 import InputField from "../components/InputField";
-import { useLoginQuery } from '../generated/graphql';
+import { useLoginMutation } from '../generated/graphql';
 import { toErrorMap } from "../utils/toErrorMap";
 import { useRouter } from "next/router";
 
 export const Login: React.FC = ({}) => {
-const [, login] = useLoginQuery();
+const [, login] = useLoginMutation();
 const router = useRouter();
 
   return (
@@ -16,11 +16,10 @@ const router = useRouter();
       <Formik
         initialValues={{ username: "", password: "" }}
         onSubmit={ async (values, { setErrors }) => {
-          // const response = await login({options: values});
-          const response = useLoginQuery({options: values});
-          if (response.data?.register.errors) {
-            setErrors(toErrorMap(response.data.register.errors));
-          } else if (response.data?.register.user) {
+          const response = await login({options: values});
+          if (response.data?.login.errors) {
+            setErrors(toErrorMap(response.data.login.errors));
+          } else if (response.data?.login.user) {
             // Worked
             router.push("/");
           }
