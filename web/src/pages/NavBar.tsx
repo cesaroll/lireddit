@@ -36,7 +36,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         {
           !fetching && data?.me && // user is logged in
           <Flex>
-            <Box color="white" mr={2}>{data.me.userName}</Box>
+            <Box color="white" mr={2}>{data.me.username}</Box>
             <Button color="white" variant="link">logout</Button>
           </Flex>
         }
