@@ -2,8 +2,9 @@ import { MyContext } from 'src/types';
 import { Resolver, Ctx, Mutation, Arg, InputType, Field, ObjectType, Query } from 'type-graphql';
 import argon2 from 'argon2';
 import { User } from '../entities/User';
-
 import "express-session";
+import { COOKIE_NAME } from '../constants';
+
 declare module "express-session" {
   interface SessionData {
     userId: number;
@@ -84,7 +85,7 @@ export class UserResolver {
 
     const hashedPassword = await argon2.hash(options.password);
     const user = em.create(User, {
-      userName: options.username,
+      username: options.username,
       password: hashedPassword
     } as User);
 
@@ -116,7 +117,7 @@ export class UserResolver {
     @Ctx()
     {em, req}: MyContext
   ): Promise<UserResponse> {
-    const user = await em.findOne(User, { userName: options.username});
+    const user = await em.findOne(User, { username: options.username});
 
     if (!user) {
       return {
@@ -143,5 +144,23 @@ export class UserResolver {
     req.session.userId = user.id;
 
     return { user };
+  }
+
+  @Mutation(() => Boolean)
+  logout(
+    @Ctx()
+    { req, res }: MyContext
+  ) {
+    return new Promise(resolve => req.session.destroy(err => {
+      // res.clearCookie(COOKIE_NAME);
+      // res.clearCookie("qid");
+      res.clearCookie(COOKIE_NAME);
+      if (err) {
+        console.log(err);
+        resolve(false);
+        return;
+      }
+      resolve(true);
+    }));
   }
 }

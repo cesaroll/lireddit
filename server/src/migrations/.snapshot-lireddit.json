@@ -35,8 +35,8 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "user_name": {
-          "name": "user_name",
+        "username": {
+          "name": "username",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
@@ -59,10 +59,10 @@
       "indexes": [
         {
           "columnNames": [
-            "user_name"
+            "username"
           ],
           "composite": false,
-          "keyName": "user_user_name_unique",
+          "keyName": "user_username_unique",
           "primary": false,
           "unique": true
         },
